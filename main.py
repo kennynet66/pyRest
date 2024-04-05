@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_restful import Api, Resource
 import pyodbc
 
@@ -22,7 +22,7 @@ try:
 
 except pyodbc.Error as e:
     print("Error connecting to the database", e)
-
+    
 
 class Products(Resource):
     def get(self):
@@ -32,10 +32,13 @@ class Products(Resource):
 
             # Convert each row to a dictionary
             products = []
+            
             for row in rows:
-                products.append(dict(zip([column[0] for column in cursor.description], row)))
+                print(row)
+                product = jsonify(row)
+                products.append(product)
 
-            return {"products"}
+            return {"products": jsonify(products)}
         except pyodbc.Error as e:
             print("Error fetching products", e)
 
