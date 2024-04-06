@@ -1,18 +1,28 @@
 from flask import Flask, jsonify
 from flask_restful import Api, Resource, reqparse, abort
-from flask_sqlalchemy import SQLAlchemy
+
 import uuid
 
 app = Flask(__name__)
 api = Api(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqllite:///database.db'
-db = SQLAlchemy(app)
 
+
+"""
+from flask_sqlalchemy import SQLAlchemy
+db = SQLAlchemy(app)
 class productModel(db.Model):
+    __tablename__ = "Products"
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(255), nullable = False)
     price = db.Column(db.Integer, nullable = False)
-    desc = db.Column(db.text, nullable = False)
+    desc = db.Column(db.String(1000), nullable = False)
+
+    def __repr__(self):
+        return f"Product(name = {name}, price = {price}, desc = {desc})"
+"""
+
+
 
 createProductArgs = reqparse.RequestParser()
 createProductArgs.add_argument("name", type=str, help="Product name is required", required=True)
