@@ -43,7 +43,7 @@ class Products(Resource):
         productId = generateId()
         args = createProductArgs.parse_args()
         products[productId] = args
-        return {"success": "Product created successfully", "productId": productId}, 200
+        return {"success": "Product created successfully"}, 200
 
     def get(self):
         return products
